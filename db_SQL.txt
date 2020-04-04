@@ -1,0 +1,230 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+CREATE DATABASE IF NOT EXISTS `rentsoft` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `rentsoft`;
+
+CREATE TABLE IF NOT EXISTS `articulos` (
+  `id_articulo` varchar(50) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `tipo` varchar(100) DEFAULT NULL,
+  `disponible` smallint(6) DEFAULT NULL,
+  `precio` float DEFAULT NULL,
+  PRIMARY KEY (`id_articulo`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
+INSERT INTO `articulos` (`id_articulo`, `nombre`, `tipo`, `disponible`, `precio`) VALUES
+	('art0001', 'Disfraz pirata', 'halloween', 0, 820),
+	('art0002', 'Docena de Sillas', 'metálicas desplegables con cojin', 1, 200),
+	('art0003', 'Disfraz hada', 'primavera', 1, 150),
+	('art0004', 'Disfraz santa claus', 'navideño', 1, 250),
+	('art0005', 'Docena Mesas', 'armables de plastico', 1, 600),
+	('art0006', 'Docena Mesas', 'Tabla', 0, 220),
+	('art0007', 'Toldos', 'Grandes', 1, 90),
+	('art0008', 'Disfraz payaso', 'carnaval', 1, 100),
+	('art0009', 'Disfraz payaso asesino', 'Halloween', 1, 230),
+	('art0010', 'Kit de fiesta', 'contiene toldo,mesas,sillas y manteles', 1, 2500),
+	('art0011', 'manteles', 'floreado', 1, 160);
+/*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `datos_empresa` (
+  `rfc` varchar(100) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `encargado` varchar(100) DEFAULT NULL,
+  `correo` varchar(100) DEFAULT NULL,
+  `telefono` varchar(50) DEFAULT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `localidad` varchar(100) NOT NULL,
+  PRIMARY KEY (`rfc`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `datos_empresa` DISABLE KEYS */;
+INSERT INTO `datos_empresa` (`rfc`, `nombre`, `encargado`, `correo`, `telefono`, `direccion`, `localidad`) VALUES
+	('R2008ON20', 'RentSoft', 'Julian Perez', 'juliperez@gmail.com', '9889575920', 'calle 9 por 12 y 14 s/n', 'Merida, Yucatan');
+/*!40000 ALTER TABLE `datos_empresa` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `detalle_devoluciones` (
+  `id_detalle` int(11) NOT NULL AUTO_INCREMENT,
+  `id_articulo` varchar(100) DEFAULT '0',
+  `folio_dev` varchar(100) DEFAULT '0',
+  PRIMARY KEY (`id_detalle`),
+  KEY `id_articulo` (`id_articulo`),
+  KEY `folio_dev` (`folio_dev`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `detalle_devoluciones` DISABLE KEYS */;
+INSERT INTO `detalle_devoluciones` (`id_detalle`, `id_articulo`, `folio_dev`) VALUES
+	(1, 'art0011', 'DVNS-20020873835'),
+	(2, 'art0007', 'DVNS-20020873044'),
+	(3, 'art0003', 'DVNS-20021151840'),
+	(4, 'art0001', 'DVNS-200212120418');
+/*!40000 ALTER TABLE `detalle_devoluciones` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `detalle_rentas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_articulo` varchar(20) DEFAULT NULL,
+  `precio` float DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `folio` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_articulo` (`id_articulo`),
+  KEY `folio` (`folio`)
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `detalle_rentas` DISABLE KEYS */;
+INSERT INTO `detalle_rentas` (`id`, `id_articulo`, `precio`, `total`, `folio`) VALUES
+	(1, 'art0001', 800, 1600, 'RTA-200201122748'),
+	(2, 'art0009', 230, 690, 'RTA-200201122748'),
+	(3, 'art0010', 2500, 2500, 'RTA-200201123446'),
+	(4, 'art0003', 150, 150, 'RTA-200201123446'),
+	(5, 'art0005', 600, 600, 'RTA-200201123446'),
+	(6, 'art0001', 800, 800, 'RTA-200201125109'),
+	(7, 'art0005', 600, 1200, 'RTA-20020140248'),
+	(8, 'art0002', 200, 400, 'RTA-20020140248'),
+	(9, 'art0001', 800, 800, 'RTA-200202124814'),
+	(10, 'art0008', 100, 200, 'RTA-20020480449'),
+	(11, 'art0007', 90, 180, 'RTA-20020480449'),
+	(12, 'art0011', 160, 480, 'RTA-20020420815'),
+	(13, 'art0004', 250, 500, 'RTA-20020420815'),
+	(14, 'art0011', 160, 640, 'RTA-200205110813'),
+	(15, 'art0002', 200, 1000, 'RTA-200205110813'),
+	(16, 'art0007', 90, 450, 'RTA-200205113503'),
+	(17, 'art0007', 90, 720, 'RTA-200207113558'),
+	(18, 'art0004', 250, 750, 'RTA-20020834411'),
+	(19, 'art0003', 150, 450, 'RTA-20020865042'),
+	(20, 'art0011', 160, 160, 'RTA-20020871259'),
+	(26, 'art0002', 200, 200, 'RTA-20022425856'),
+	(25, 'art0002', 200, 200, 'RTA-20021495600'),
+	(24, 'art0005', 600, 600, 'RTA-20021151411'),
+	(27, 'art0001', 800, 800, 'RTA-20030125247'),
+	(28, 'art0003', 150, 150, 'RTA-20040343303'),
+	(29, 'art0001', 820, 820, 'RTA-20040345935');
+/*!40000 ALTER TABLE `detalle_rentas` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `devoluciones` (
+  `folio_dev` varchar(100) NOT NULL,
+  `fecha_devolucion` varchar(100) NOT NULL,
+  `id_empleado` varchar(50) NOT NULL,
+  PRIMARY KEY (`folio_dev`),
+  KEY `id_usuario` (`id_empleado`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `devoluciones` DISABLE KEYS */;
+INSERT INTO `devoluciones` (`folio_dev`, `fecha_devolucion`, `id_empleado`) VALUES
+	('DVNS-20020873835', '2020/02/08', 'vendor'),
+	('DVNS-20020873044', '2020/02/08', 'vendor'),
+	('DVNS-20021151840', '2020/02/11', 'vendor'),
+	('DVNS-200212120418', '2020/02/12', 'vendor');
+/*!40000 ALTER TABLE `devoluciones` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `empleados` (
+  `id_empleado` varchar(20) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `apellidos` varchar(50) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `contrasenia` varchar(20) DEFAULT NULL,
+  `edad` smallint(6) DEFAULT NULL,
+  `sexo` char(2) DEFAULT NULL,
+  `id_puesto` varchar(50) DEFAULT NULL,
+  `foto` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_empleado`),
+  KEY `id_puesto` (`id_puesto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
+INSERT INTO `empleados` (`id_empleado`, `nombre`, `apellidos`, `telefono`, `contrasenia`, `edad`, `sexo`, `id_puesto`, `foto`) VALUES
+	('admin', 'Jehovani', 'Chan Pacheco', '9889575026', '2411', 21, 'M', '1', '870540.png'),
+	('calin', 'Charli', 'Colli Chan', '9889345611', '12345', 28, 'M', '2', 'user.png'),
+	('rebe', 'Rebeca', 'Chi Pech', '9981223345', '123456', 30, 'F', '2', 'boo_perrito.jpg'),
+	('vendor', 'Victor', 'Gomez Fernandez', '9988776655', '2345', 25, 'M', '2', 'user.png'),
+	('admin2', 'Cristel', 'Pool Sarabia', '9980772213', '1124', 18, 'F', '1', 'gooku_miiilk.jpg'),
+	('paty', 'Fatima', 'Pacheco', '9889679116', '1380', 40, 'F', '2', NULL);
+/*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `puestos` (
+  `id_puesto` varchar(20) NOT NULL,
+  `puesto` varchar(60) NOT NULL,
+  PRIMARY KEY (`id_puesto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `puestos` DISABLE KEYS */;
+INSERT INTO `puestos` (`id_puesto`, `puesto`) VALUES
+	('1', 'Administrador'),
+	('2', 'Vendedor');
+/*!40000 ALTER TABLE `puestos` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `recargos` (
+  `id_recargo` varchar(50) NOT NULL,
+  `tipo` varchar(100) DEFAULT NULL,
+  `precio` float DEFAULT NULL,
+  PRIMARY KEY (`id_recargo`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `recargos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `recargos` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `rentas` (
+  `folio` varchar(100) NOT NULL,
+  `id_empleado` varchar(50) DEFAULT NULL,
+  `fecha_renta` varchar(100) DEFAULT NULL,
+  `fecha_devolucion` varchar(100) DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  PRIMARY KEY (`folio`),
+  KEY `id_usuario` (`id_empleado`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `rentas` DISABLE KEYS */;
+INSERT INTO `rentas` (`folio`, `id_empleado`, `fecha_renta`, `fecha_devolucion`, `total`) VALUES
+	('RTA-200201123446', 'vendor', '2020/02/01', '2020/02/13', 3250),
+	('RTA-200201122748', 'vendor', '2020/02/01', '2020/02/13', 2290),
+	('RTA-200201125109', 'vendor', '2020/02/01', '2020/02/13', 800),
+	('RTA-20020140248', 'vendor', '2020/02/01', '2020/02/13', 1600),
+	('RTA-200202124814', 'vendor', '2020/02/02', '2020/02/13', 800),
+	('RTA-20020480449', 'vendor', '2020/02/04', '2020/02/13', 380),
+	('RTA-20020420815', 'vendor', '2020/02/04', '2020/02/13', 980),
+	('RTA-200205110813', 'vendor', '2020/02/05', '2020/02/13', 1640),
+	('RTA-200205113503', 'vendor', '2020/02/05', '2020/02/13', 450),
+	('RTA-200207113558', 'vendor', '2020/02/07', '2020/02/13', 720),
+	('RTA-20020834411', 'vendor', '2020/02/08', '2020/02/13', 750),
+	('RTA-20020865042', 'admin', '2020/02/08', '2020/02/13', 450),
+	('RTA-20020871259', 'admin', '2020/02/08', '2020/02/13', 160),
+	('RTA-20021151210', 'admin', '2020/02/11', '2020/02/13', 1150),
+	('RTA-20021151411', 'admin', '2020/02/11', '2020/02/13', 600),
+	('RTA-20021495600', 'admin', '2020/02/14', '2020/02/13', 200),
+	('RTA-20022425856', 'admin', '2020/02/24', '2020/02/13', 200),
+	('RTA-20030125247', 'admin', '2020/03/01', '2020/02/13', 800),
+	('RTA-20040343303', 'admin', '2020/04/03', '2020/02/13', 150),
+	('RTA-20040345935', 'admin', '2020/04/03', '2020/02/13', 820);
+/*!40000 ALTER TABLE `rentas` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id_usuario` varchar(50) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `apellidos` varchar(50) DEFAULT NULL,
+  `telefono` varchar(50) DEFAULT NULL,
+  `contrasenia` varchar(50) DEFAULT NULL,
+  `localidad` varchar(100) DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `contrasenia`, `localidad`, `direccion`) VALUES
+	('fede', 'Federica', 'Peralta', '9876543211', 'fede12', 'Izamal, Yucatan', 'celle no. 45'),
+	('rene', 'Renato', 'Ibarra', '9087654321', 'rene23', 'Sudzal, Yucatan', 'calle 10 entre 12 no. 22'),
+	('fani', 'Estefani', 'Pacheco', NULL, 'fani34', 'Xanaba, Yucatan', 'calle 9 entre 12 y 14 s/n'),
+	('yami', 'Yamilet', 'Gomez', NULL, 'yami45', 'Izamal, Yucatan', 'celle 40 entre 38 y 42, colonia San Francisco'),
+	('mau', 'Maurice', 'Martinez', NULL, '123', 'Merida, Yucatan', 'Calle 23'),
+	('pati', 'fatima', 'pacheco', '9889679116', '123', 'xanaba,yucatan', 'calle 9'),
+	('jeho', 'martin', 'chan', '9889575026', '1111', 'xanaba', 'calle 13'),
+	('arlette', 'Mirsa', 'maldonado', '9087654321', '1234', 'asdfgh', 'asdfghj'),
+	('cristel', 'cristel', 'sarabia pool', '9843220887', 'pacheco', 'kantunil', 'c27 x26 y s/n');
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

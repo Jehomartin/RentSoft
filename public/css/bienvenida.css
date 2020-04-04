@@ -1,0 +1,29 @@
+.boton{
+	background-color: #FF5733;
+	color: white;
+	font-family: arial black;
+	border-radius: 40px;
+	border-color: #0B69F2;
+	width: 500px;
+	height: 100px;
+}
+
+.row input[type="button"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #FF5733 ;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 30px;
+    height: 80px;
+}
+.row input[type="button"]:hover
+{
+    cursor: pointer;
+    background: #E205F9 ;
+    color: #000;
+    width: 200px;
+    height: 100px;
+}
